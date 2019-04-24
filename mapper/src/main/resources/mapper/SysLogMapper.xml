@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.mapper.SysLogMapper">
+  <resultMap id="BaseResultMap" type="com.spring.domain.SysLog">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="user_id" jdbcType="CHAR" property="userId" />
+    <result column="log_level" jdbcType="SMALLINT" property="logLevel" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+    <result column="operate_type" jdbcType="SMALLINT" property="operateType" />
+    <result column="broswer" jdbcType="VARCHAR" property="broswer" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.spring.domain.SysLogWithBLOBs">
+    <result column="log_content" jdbcType="LONGVARCHAR" property="logContent" />
+    <result column="note" jdbcType="LONGVARCHAR" property="note" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, log_level, operate_time, operate_type, broswer
+  </sql>
+  <sql id="Blob_Column_List">
+    log_content, note
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_log
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_log
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.spring.domain.SysLogWithBLOBs">
+    insert into sys_log (id, user_id, log_level, 
+      operate_time, operate_type, broswer, 
+      log_content, note)
+    values (#{id,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, #{logLevel,jdbcType=SMALLINT}, 
+      #{operateTime,jdbcType=TIMESTAMP}, #{operateType,jdbcType=SMALLINT}, #{broswer,jdbcType=VARCHAR}, 
+      #{logContent,jdbcType=LONGVARCHAR}, #{note,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.spring.domain.SysLogWithBLOBs">
+    insert into sys_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="logLevel != null">
+        log_level,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+      <if test="operateType != null">
+        operate_type,
+      </if>
+      <if test="broswer != null">
+        broswer,
+      </if>
+      <if test="logContent != null">
+        log_content,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="logLevel != null">
+        #{logLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateType != null">
+        #{operateType,jdbcType=SMALLINT},
+      </if>
+      <if test="broswer != null">
+        #{broswer,jdbcType=VARCHAR},
+      </if>
+      <if test="logContent != null">
+        #{logContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.domain.SysLogWithBLOBs">
+    update sys_log
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="logLevel != null">
+        log_level = #{logLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateType != null">
+        operate_type = #{operateType,jdbcType=SMALLINT},
+      </if>
+      <if test="broswer != null">
+        broswer = #{broswer,jdbcType=VARCHAR},
+      </if>
+      <if test="logContent != null">
+        log_content = #{logContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.spring.domain.SysLogWithBLOBs">
+    update sys_log
+    set user_id = #{userId,jdbcType=CHAR},
+      log_level = #{logLevel,jdbcType=SMALLINT},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      operate_type = #{operateType,jdbcType=SMALLINT},
+      broswer = #{broswer,jdbcType=VARCHAR},
+      log_content = #{logContent,jdbcType=LONGVARCHAR},
+      note = #{note,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.spring.domain.SysLog">
+    update sys_log
+    set user_id = #{userId,jdbcType=CHAR},
+      log_level = #{logLevel,jdbcType=SMALLINT},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      operate_type = #{operateType,jdbcType=SMALLINT},
+      broswer = #{broswer,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

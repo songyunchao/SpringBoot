@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.mapper.SysPowerMapper">
+  <resultMap id="BaseResultMap" type="com.spring.domain.SysPower">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="menu_id" jdbcType="CHAR" property="menuId" />
+    <result column="enabled" jdbcType="BIT" property="enabled" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="priority" jdbcType="INTEGER" property="priority" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_man_id" jdbcType="CHAR" property="createManId" />
+    <result column="update_man_id" jdbcType="CHAR" property="updateManId" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.spring.domain.SysPower">
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, code, menu_id, enabled, url, priority, create_time, create_man_id, update_man_id, 
+    update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_power
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_power
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.spring.domain.SysPower">
+    insert into sys_power (id, name, code, 
+      menu_id, enabled, url, priority, 
+      create_time, create_man_id, update_man_id, 
+      update_time, description)
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{menuId,jdbcType=CHAR}, #{enabled,jdbcType=BIT}, #{url,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createManId,jdbcType=CHAR}, #{updateManId,jdbcType=CHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.spring.domain.SysPower">
+    insert into sys_power
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="menuId != null">
+        menu_id,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createManId != null">
+        create_man_id,
+      </if>
+      <if test="updateManId != null">
+        update_man_id,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=CHAR},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createManId != null">
+        #{createManId,jdbcType=CHAR},
+      </if>
+      <if test="updateManId != null">
+        #{updateManId,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.domain.SysPower">
+    update sys_power
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="menuId != null">
+        menu_id = #{menuId,jdbcType=CHAR},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createManId != null">
+        create_man_id = #{createManId,jdbcType=CHAR},
+      </if>
+      <if test="updateManId != null">
+        update_man_id = #{updateManId,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.spring.domain.SysPower">
+    update sys_power
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      menu_id = #{menuId,jdbcType=CHAR},
+      enabled = #{enabled,jdbcType=BIT},
+      url = #{url,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_man_id = #{createManId,jdbcType=CHAR},
+      update_man_id = #{updateManId,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.spring.domain.SysPower">
+    update sys_power
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      menu_id = #{menuId,jdbcType=CHAR},
+      enabled = #{enabled,jdbcType=BIT},
+      url = #{url,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_man_id = #{createManId,jdbcType=CHAR},
+      update_man_id = #{updateManId,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>
