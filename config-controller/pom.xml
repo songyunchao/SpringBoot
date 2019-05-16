@@ -30,6 +30,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         
+        <!-- logback -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+        
         <!--Apache Shiro所需的jar包-->    
 	  	<dependency>    
 	      	<groupId>org.apache.shiro</groupId>    
