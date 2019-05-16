@@ -23,6 +23,51 @@
     id, code, username, password, realname, email, telphone, description, issys, enabled, 
     priority, create_man_id, create_time, update_man_id, update_time, shop_id
   </sql>
+  
+  <sql id="conditions">
+  	<where> 
+  		<if test="q != null and q != ''">
+  			and (username like '%${q}%' 
+  				or realname like '%${q}%'
+  				or telphone like '%${q}%'
+  				)
+  		</if>
+  		
+  		<if test="issys != null">
+  			and issys = #{issys}
+  		</if>
+  		
+  		<if test="enabled != null">
+  			and enabled = #{enabled}
+  		</if>
+  		
+  		<if test="id != null and id != ''">
+  			and id = #{id}
+  		</if>
+  		
+  		<if test="username != null and username != ''">
+  			and username = #{username}
+  		</if>
+  		
+	</where>
+  </sql>
+  
+  <select id="selectList" resultMap="BaseResultMap" 
+  	parameterType="com.fsun.domain.condition.SysUserCondition" >    
+	SELECT 
+		<include refid="Base_Column_List" />
+    FROM sys_user
+    	<include refid="conditions" />
+  </select>
+  
+  <select id="selectListMap" resultType="java.util.Map" 
+  	parameterType="com.fsun.domain.condition.SysUserCondition" >    
+	SELECT 
+		<include refid="Base_Column_List" />
+    FROM sys_user
+    	<include refid="conditions" />
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

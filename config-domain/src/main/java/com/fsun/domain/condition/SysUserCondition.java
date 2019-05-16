@@ -2,7 +2,9 @@ package com.fsun.domain.condition;
 
 import java.util.Date;
 
-public class SysUserCondition {
+import com.fsun.domain.common.BaseCondition;
+
+public class SysUserCondition extends BaseCondition {
     /**
      * 用户ID
      * 表字段 : sys_user.id
