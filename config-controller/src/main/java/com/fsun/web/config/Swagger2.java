@@ -21,7 +21,7 @@ public class Swagger2 {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.fsun.web.controller"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.any()) 
                 .build();
     }
 
