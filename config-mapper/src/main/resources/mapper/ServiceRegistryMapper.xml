@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fsun.mapper.ServiceRegistryMapper" >
+  <resultMap id="BaseResultMap" type="com.fsun.domain.model.ServiceRegistry" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="evaluation_order" property="evaluationOrder" jdbcType="INTEGER" />
+    <result column="ignore_attributes" property="ignoreAttributes" jdbcType="BIT" />
+    <result column="img_path" property="imgPath" jdbcType="VARCHAR" />
+    <result column="index_url" property="indexUrl" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="power_code" property="powerCode" jdbcType="VARCHAR" />
+    <result column="service_id" property="serviceId" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, evaluation_order, ignore_attributes, img_path, index_url, name, power_code, service_id, 
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from service_registry
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from service_registry
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fsun.domain.model.ServiceRegistry" >
+    insert into service_registry (id, evaluation_order, ignore_attributes, 
+      img_path, index_url, name, 
+      power_code, service_id, description
+      )
+    values (#{id,jdbcType=VARCHAR}, #{evaluationOrder,jdbcType=INTEGER}, #{ignoreAttributes,jdbcType=BIT}, 
+      #{imgPath,jdbcType=VARCHAR}, #{indexUrl,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{powerCode,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fsun.domain.model.ServiceRegistry" >
+    insert into service_registry
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="evaluationOrder != null" >
+        evaluation_order,
+      </if>
+      <if test="ignoreAttributes != null" >
+        ignore_attributes,
+      </if>
+      <if test="imgPath != null" >
+        img_path,
+      </if>
+      <if test="indexUrl != null" >
+        index_url,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="powerCode != null" >
+        power_code,
+      </if>
+      <if test="serviceId != null" >
+        service_id,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationOrder != null" >
+        #{evaluationOrder,jdbcType=INTEGER},
+      </if>
+      <if test="ignoreAttributes != null" >
+        #{ignoreAttributes,jdbcType=BIT},
+      </if>
+      <if test="imgPath != null" >
+        #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="indexUrl != null" >
+        #{indexUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="powerCode != null" >
+        #{powerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fsun.domain.model.ServiceRegistry" >
+    update service_registry
+    <set >
+      <if test="evaluationOrder != null" >
+        evaluation_order = #{evaluationOrder,jdbcType=INTEGER},
+      </if>
+      <if test="ignoreAttributes != null" >
+        ignore_attributes = #{ignoreAttributes,jdbcType=BIT},
+      </if>
+      <if test="imgPath != null" >
+        img_path = #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="indexUrl != null" >
+        index_url = #{indexUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="powerCode != null" >
+        power_code = #{powerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null" >
+        service_id = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fsun.domain.model.ServiceRegistry" >
+    update service_registry
+    set evaluation_order = #{evaluationOrder,jdbcType=INTEGER},
+      ignore_attributes = #{ignoreAttributes,jdbcType=BIT},
+      img_path = #{imgPath,jdbcType=VARCHAR},
+      index_url = #{indexUrl,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      power_code = #{powerCode,jdbcType=VARCHAR},
+      service_id = #{serviceId,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

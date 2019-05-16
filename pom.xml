@@ -8,90 +8,172 @@
         <version>2.1.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.springboot</groupId>
+    <groupId>com.fsun.config</groupId>
     <artifactId>parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>parent</name>
     <packaging>pom</packaging><!-- 注意：修改jar为pom -->
+    
+    <!-- 注意：加入子模块 -->
+    <modules>
+        <module>config-common</module>
+        <module>config-exception</module>
+        <module>config-domain</module>
+        <module>config-mapper</module>
+        <module>config-service</module>
+        <module>config-controller</module>
+    </modules>
 
     <properties>
         <java.version>1.8</java.version>
+        <spring-boot-starter>2.1.4.RELEASE</spring-boot-starter>
+        <druid.version>1.1.10</druid.version>
+        <pagehelper.version>4.1.3</pagehelper.version>
+        <mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
+        <shiro.version>1.2.2</shiro.version>
+        <swagger.version>2.2.2</swagger.version>
+        <fsun-config.version>${project.version}</fsun-config.version>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-      <!--  <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-
-       <!-- <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.11</version>
-        </dependency>
-
-        <!-- 数据库连接池 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.1.10</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
-    <!-- 注意：加入子模块 -->
-    <modules>
-        <module>common</module>
-        <module>domain</module>
-        <module>mapper</module>
-        <module>service</module>
-        <module>controller</module>
-    </modules>
+	<dependencyManagement>
+		<dependencies>    
+	    	<!-- 内部依赖 -->
+	    	<dependency>
+				<groupId>com.fsun.config</groupId>
+				<artifactId>config-common</artifactId>
+				<version>${fsun-config.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fsun.config</groupId>
+				<artifactId>config-exception</artifactId>
+				<version>${fsun-config.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fsun.config</groupId>
+				<artifactId>config-domain</artifactId>
+				<version>${fsun-config.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fsun.config</groupId>
+				<artifactId>config-mapper</artifactId>
+				<version>${fsun-config.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fsun.config</groupId>
+				<artifactId>config-service</artifactId>
+				<version>${fsun-config.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fsun.config</groupId>
+				<artifactId>config-controller</artifactId>
+				<version>${fsun-config.version}</version>
+			</dependency>	
+	    
+	        <dependency>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-starter-aop</artifactId>
+	            <version>${spring-boot-starter}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-starter-data-redis</artifactId>
+	            <version>${spring-boot-starter}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-starter-jdbc</artifactId>
+	            <version>${spring-boot-starter}</version>
+	        </dependency>
+	      <!--  <dependency>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-starter-security</artifactId>
+	            <version>${spring-boot-starter}</version>
+	        </dependency>-->
+	        <dependency>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-starter-web</artifactId>
+	            <version>${spring-boot-starter}</version>
+	        </dependency>
+	        
+	        <dependency>
+	            <groupId>org.mybatis.spring.boot</groupId>
+	            <artifactId>mybatis-spring-boot-starter</artifactId>
+	            <version>${mybatis-spring-boot-starter.version}</version>
+	        </dependency>
+	
+	       <!-- <dependency>
+	            <groupId>mysql</groupId>
+	            <artifactId>mysql-connector-java</artifactId>
+	            <scope>runtime</scope>
+	        </dependency>-->
+	        
+	        <dependency>
+	            <groupId>mysql</groupId>
+	            <artifactId>mysql-connector-java</artifactId>
+	            <version>${mysql.version}</version>
+	        </dependency>
+	
+	        <!-- 数据库连接池 -->
+	        <dependency>
+	            <groupId>com.alibaba</groupId>
+	            <artifactId>druid</artifactId>
+	            <version>${druid.version}</version>
+	        </dependency>
+		
+	        <dependency>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-starter-test</artifactId>
+	            <version>${spring-boot-starter}</version>
+	            <scope>test</scope>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.springframework.security</groupId>
+	            <artifactId>spring-security-test</artifactId>
+	            <scope>test</scope>
+	        </dependency>
+	        
+	        <dependency>
+		  		<groupId>com.github.pagehelper</groupId>
+		  		<artifactId>pagehelper</artifactId>
+		  		<version>${pagehelper.version}</version>
+		  	</dependency>
+		  	
+		  	<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+			
+			<!--Apache Shiro所需的jar包-->    
+		  	<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-core</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-web</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			
+			<!-- Swagger2 restAPI -->
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+		    
+	    </dependencies>
+	</dependencyManagement>
 
 </project>

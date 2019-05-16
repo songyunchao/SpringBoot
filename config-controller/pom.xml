@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.fsun.config</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+       <!-- <relativePath/>  lookup parent from repository -->
+    </parent>
+    
+    <artifactId>config-controller</artifactId>
+    <name>config-controller</name>
+    <packaging>jar</packaging>
+    
+	<properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- 内部依赖 -->
+        <dependency>
+            <groupId>com.fsun.config</groupId>
+            <artifactId>config-service</artifactId>
+        </dependency>
+     
+     	 <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
+        <!--Apache Shiro所需的jar包-->    
+	  	<dependency>    
+	      	<groupId>org.apache.shiro</groupId>    
+	      	<artifactId>shiro-core</artifactId>    
+	    </dependency>    
+	    <dependency>    
+	      	<groupId>org.apache.shiro</groupId>    
+	      	<artifactId>shiro-web</artifactId>    
+	    </dependency>    
+	    <dependency>    
+	      	<groupId>org.apache.shiro</groupId>    
+	      	<artifactId>shiro-spring</artifactId>    
+	    </dependency>
+	    
+	    <!-- Swagger2 restAPI -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+		</dependency>
+    
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+                <configuration>
+                    <!-- 指定该Main Class为全局的唯一入口 -->
+                    <mainClass>com.fsun.web.ControllerApplication</mainClass>
+                    <layout>ZIP</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!--可以把依赖的包都打包到生成的Jar包中-->
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
