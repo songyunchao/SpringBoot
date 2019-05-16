@@ -17,6 +17,6 @@ public class UserController
         public  String getUserByPrimaryKey(@RequestParam("userid") String userid){
            SysUser user = userService.selectByPrimaryKey(userid);
             System.out.println(user.toString());
-            return user.toString();
+            return user.toString(); 
         }
 }
