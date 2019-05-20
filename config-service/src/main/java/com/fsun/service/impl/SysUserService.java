@@ -71,7 +71,7 @@ public class SysUserService implements SysUserApi {
 		condition.setUsername(domain.getUsername());
 		boolean hasUnique= this.unique(condition);
 		if(!hasUnique){
-			throw new UserException(SCMErrorEnum.USER_DOES_NOT_EXIST);
+			throw new UserException(SCMErrorEnum.USER_EXISTED);
 		}
 		//保存数据
 		Date now = new Date();
@@ -87,7 +87,7 @@ public class SysUserService implements SysUserApi {
 		}else{
 			SysUser sysUser = this.load(id);
 			if(sysUser==null){
-				throw new UserException(SCMErrorEnum.USER_DOES_NOT_EXIST);
+				throw new UserException(SCMErrorEnum.USER_NOT_EXIST);
 			}				
 			sysUser.setRealname(domain.getRealname());
 			sysUser.setPriority(domain.getPriority());
@@ -114,10 +114,10 @@ public class SysUserService implements SysUserApi {
 
 	@Transactional
 	@Override
-	public void changeStatus(String[] skuIds, Boolean enabled, SysUser user) {
+	public void changeStatus(String[] userIds, Boolean enabled, SysUser user) {
 		Date now = new Date();
-		for (String skuId : skuIds) {
-			SysUser sysUser = this.load(skuId);
+		for (String userId : userIds) {
+			SysUser sysUser = this.load(userId);
 			sysUser.setUpdateManId(user.getId());
 			sysUser.setUpdateTime(now);
 			sysUser.setEnabled(enabled);
