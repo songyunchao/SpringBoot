@@ -62,6 +62,11 @@ public class BaseController {
 		HttpResult result = new HttpResult();
 		return result.success(model);
 	}
+	
+	protected HttpResult success(Object model, String token) {
+		HttpResult result = new HttpResult();
+		return result.success(model, token);
+	}
 
 	protected HttpResult success(int responseCode, String message) {
 		HttpResult result = new HttpResult();

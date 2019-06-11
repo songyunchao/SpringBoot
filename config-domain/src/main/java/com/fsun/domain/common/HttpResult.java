@@ -25,16 +25,21 @@ public class HttpResult implements Serializable {
 	/**
 	 * 返回状态码
 	 */
-	protected int responseCode;
+	protected int code;
 
 	/**
 	 * 返回信息
 	 */
 	protected String message;
+	
+	/**
+	 * token
+	 */
+	protected String token;
 
 	public HttpResult() {
 		this.status = false;
-		this.responseCode = SCMErrorEnum.SYSTEM_ERROR.getErrorCode();
+		this.code = SCMErrorEnum.SYSTEM_ERROR.getErrorCode();
 		this.message = SCMErrorEnum.SYSTEM_ERROR.getErrorMsg();
 	}
 
@@ -42,12 +47,12 @@ public class HttpResult implements Serializable {
 		return this.failure(SCMErrorEnum.SYSTEM_ERROR.getErrorCode(), errorMsg);
 	}
 
-	public HttpResult failure(int responseCode, String errorMsg) {
-		return this.failure(null, responseCode, errorMsg);
+	public HttpResult failure(int code, String errorMsg) {
+		return this.failure(null, code, errorMsg);
 	}
 
-	public HttpResult failure(Object entry, int responseCode, String errorMsg) {
-		return this.result(entry, false, responseCode, errorMsg);
+	public HttpResult failure(Object entry, int code, String errorMsg) {
+		return this.result(entry, false, code, errorMsg);
 	}
 
 	public HttpResult failure(SCMException e) {
@@ -78,27 +83,49 @@ public class HttpResult implements Serializable {
 		return this.success(entry, SCMErrorEnum.SUCCESS.getErrorCode(),
 				SCMErrorEnum.SUCCESS.getErrorMsg());
 	}
+	
+	public HttpResult success(Object entry, String token) {
+		return this.success(entry, SCMErrorEnum.SUCCESS.getErrorCode(),
+				SCMErrorEnum.SUCCESS.getErrorMsg(), token);
+	}
+
 
 	public HttpResult success(String message) {
 		return this.success(null, SCMErrorEnum.SUCCESS.getErrorCode(), message);
 	}
 
-	public HttpResult success(int responseCode, String message) {
-		return this.success(null, responseCode, message);
+	public HttpResult success(int code, String message) {
+		return this.success(null, code, message);
 	}
 
-	public HttpResult success(Object entry, int responseCode, String message) {
-		return this.result(entry, true, responseCode, message);
+	public HttpResult success(Object entry, int code, String message) {
+		return this.result(entry, true, code, message);
+	}
+	
+	public HttpResult success(Object entry, int code, String message, String token) {
+		return this.result(entry, true, code, message, token);
 	}
 
-	private HttpResult result(Object entry, boolean status, int responseCode,
+	private HttpResult result(Object entry, boolean status, int code,
 			String message) {
 		if (entry != null) {
 			this.entry = entry;
 		}
 		this.status = status;
-		this.responseCode = responseCode;
+		this.code = code;
 		this.message = message;
+		return this;
+	}
+	
+	private HttpResult result(Object entry, boolean status, int code,
+			String message, String token) {
+		if (entry != null) {
+			this.entry = entry;
+		}
+		this.status = status;
+		this.code = code;
+		this.message = message;
+		this.token = token;
 		return this;
 	}
 
@@ -106,8 +133,8 @@ public class HttpResult implements Serializable {
 		return status;
 	}
 
-	public int getResponseCode() {
-		return responseCode;
+	public int getCode() {
+		return code;
 	}
 
 	public String getMessage() {
@@ -117,4 +144,9 @@ public class HttpResult implements Serializable {
 	public Object getEntry() {
 		return entry;
 	}
+
+	public String getToken() {
+		return token;
+	}
+	
 }

@@ -17,4 +17,14 @@ import com.fsun.mapper.common.BaseMySqlMapper;
 @Mapper
 public interface SysUserMapper extends BaseMySqlMapper<SysUser>{
 
+	/**
+	 * 用户登录查询
+	 * @Title: queryCasLogin 
+	 * @Description: TODO(这里用一句话描述这个方法的作用) 
+	 * @param @param user
+	 * @param @return 
+	 * @return SysUser
+	 */
+	public SysUser queryCasLogin(SysUser user);
+
 }

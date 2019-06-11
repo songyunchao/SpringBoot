@@ -2,7 +2,9 @@ package com.fsun.domain.condition;
 
 import java.util.Date;
 
-public class SysPowerCondition {
+import com.fsun.domain.common.BaseCondition;
+
+public class SysPowerCondition extends BaseCondition{
 	/**
      * ID
      * 表字段 : sys_power.id

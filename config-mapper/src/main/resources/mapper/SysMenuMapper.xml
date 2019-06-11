@@ -23,6 +23,19 @@
     id, code, name, url, icon, create_time, update_man_id, update_time, isleaf, iconcls, 
     expanded, enabled, description, priority, create_man_id, pid
   </sql>
+  
+  <select id="findMenusByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >    
+	SELECT 
+		<include refid="Base_Column_List" />   
+    FROM sys_menu WHERE id IN (
+		SELECT DISTINCT r_role_menu.menu_id 
+		FROM r_role_menu r_role_menu
+		LEFT JOIN r_role_user r_role_user ON r_role_user.role_id = r_role_menu.role_id 
+		LEFT JOIN sys_suer sys_suer ON sys_suer.id = r_role_user.user_id
+		WHERE sys_suer.username = #{username, jdbcType=VARCHAR}
+	) ORDER BY pid, priority asc
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

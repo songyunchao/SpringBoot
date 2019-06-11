@@ -1,8 +1,8 @@
 #######################################################################
 server:
   port: 8080
-#  servlet:
- #   context-path: /
+  servlet:
+   context-path: /dev-api
 
 #logging:
 # level: debug
@@ -11,7 +11,13 @@ server:
 #  level:
 #    root: debug
 
-
+cas:
+  prefixUrl: http://10.10.23.124:8088/cas
+  loginUrl: ${cas.prefixUrl}/login
+  serviceUrl: http://10.10.23.124:${server.port}${server.servlet.context-path}
+  callbackUrl: ${cas.serviceUrl}/callback
+jwt:
+  salt: 12345678901234567890123456789012
 
 
 #######################################################################

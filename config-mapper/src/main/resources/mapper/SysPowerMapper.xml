@@ -19,6 +19,60 @@
     id, name, code, menu_id, enabled, description, url, priority, create_time, create_man_id, 
     update_man_id, update_time
   </sql>
+ 
+  <sql id="conditions">
+  	<where> 
+  		<if test="q != null and q != ''">
+  			and (name like '%${q}%' 
+  				or code like '%${q}%'
+  				)
+  		</if>
+	
+  		<if test="enabled != null">
+  			and enabled = #{enabled}
+  		</if>
+  		
+  		<if test="id != null and id != ''">
+  			and id = #{id}
+  		</if>
+  		
+  		<if test="code != null and code != ''">
+  			and code = #{code}
+  		</if>
+  		
+	</where>
+  </sql>
+  
+  <select id="selectList" resultMap="BaseResultMap" 
+  	parameterType="com.fsun.domain.condition.SysPowerCondition" >    
+	SELECT 
+		<include refid="Base_Column_List" />
+    FROM sys_power
+    	<include refid="conditions" />
+  </select>
+  
+  <select id="selectListMap" resultType="java.util.Map" 
+  	parameterType="com.fsun.domain.condition.SysPowerCondition" >    
+	SELECT 
+		<include refid="Base_Column_List" />
+    FROM sys_power
+    	<include refid="conditions" />
+  </select>
+  
+  <select id="findPermissionsByUsername" resultType="java.lang.String" parameterType="java.lang.String" >    
+	SELECT 
+		DISTINCT sys_power.`code` as code
+	FROM r_role_power r_role_power 
+	LEFT JOIN sys_power sys_power ON sys_power.id = r_role_power.power_id
+	WHERE r_role_power.role_id IN (	
+		SELECT r_role_user.role_id FROM r_role_user r_role_user, sys_user sys_user 
+		WHERE r_role_user.user_id = sys_user.id 
+		AND sys_user.enabled = 1
+		AND sys_user.username = #{username,jdbcType=VARCHAR}
+	)
+  </select>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

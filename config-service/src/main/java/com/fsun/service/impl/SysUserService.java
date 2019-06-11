@@ -1,5 +1,6 @@
 package com.fsun.service.impl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +13,12 @@ import com.fsun.common.utils.PKMapping;
 import com.fsun.common.utils.StringUtils;
 import com.fsun.domain.common.PageModel;
 import com.fsun.domain.condition.SysUserCondition;
+import com.fsun.domain.model.SysRole;
 import com.fsun.domain.model.SysUser;
 import com.fsun.exception.enums.SCMErrorEnum;
 import com.fsun.exception.sys.UserException;
+import com.fsun.mapper.SysPowerMapper;
+import com.fsun.mapper.SysRoleMapper;
 import com.fsun.mapper.SysUserMapper;
 import com.fsun.service.SysUserApi;
 
@@ -32,6 +36,12 @@ public class SysUserService implements SysUserApi {
    
 	@Autowired
     private SysUserMapper sysUserMapper;
+	
+	@Autowired
+    private SysRoleMapper sysRoleMapper;
+	
+	@Autowired
+    private SysPowerMapper sysPowerMapper;
     
     @Override
 	public boolean unique(SysUserCondition condition) {
@@ -123,5 +133,16 @@ public class SysUserService implements SysUserApi {
 			sysUser.setEnabled(enabled);
 			sysUserMapper.updateByPrimaryKeySelective(sysUser);
 		}
+	}
+
+	@Override
+	public List<SysRole> findRolesByUsername(String username) {
+		List<SysRole> list = sysRoleMapper.findRolesByUsername(username);
+		return list;
+	}
+
+	@Override
+	public Collection<? extends String> findPermissionsByUsername(String username) {		
+		return sysPowerMapper.findPermissionsByUsername(username);
 	}
 }

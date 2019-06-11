@@ -2,6 +2,7 @@ package com.fsun.web.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -97,6 +98,7 @@ public class UserController extends BaseController {
 	 * @return HttpResult
 	 */
 	@RequestMapping(value="/list", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequiresPermissions(value={"USER_EDIT"})
 	@ResponseBody
 	public HttpResult list(SysUserCondition condition) {
 		try {

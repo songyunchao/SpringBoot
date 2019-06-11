@@ -49,22 +49,22 @@ public class PageResult extends HttpResult {
 	}
 
 	public PageResult success(int pageNum, int pageSize, long total,
-			Object entry, int responseCode, String message) {
+			Object entry, int code, String message) {
 		this.pageNum = pageNum;
 		this.pageSize = pageSize;
 		this.total = total;
 		this.rows = entry;
-		return (PageResult) super.success(entry, responseCode, message);
+		return (PageResult) super.success(entry, code, message);
 	}
 	
 	public PageResult success(int pageNum, int pageSize, long total,
-			Object entry, Object footer, int responseCode, String message) {
+			Object entry, Object footer, int code, String message) {
 		this.pageNum = pageNum;
 		this.pageSize = pageSize;
 		this.total = total;
 		this.rows = entry;
 		this.footer = footer;
-		return (PageResult) super.success(entry, responseCode, message);
+		return (PageResult) super.success(entry, code, message);
 	}
 
 	public int getPageNum() {

@@ -1,6 +1,10 @@
 package com.fsun.service;
 
+import java.util.Collection;
+import java.util.List;
+
 import com.fsun.domain.condition.SysUserCondition;
+import com.fsun.domain.model.SysRole;
 import com.fsun.domain.model.SysUser;
 
 /**
@@ -31,4 +35,24 @@ public interface SysUserApi extends BaseApi<SysUser, SysUserCondition>{
 	 * @return void
 	 */
 	public void changeStatus(String[] userIds, Boolean enabled, SysUser currentUser);
+
+	/**
+	 * 
+	 * @Title: findRolesByUsername 
+	 * @Description: TODO(这里用一句话描述这个方法的作用) 
+	 * @param @param username
+	 * @param @return 
+	 * @return List<SysRole>
+	 */
+	public List<SysRole> findRolesByUsername(String username);
+
+	/**
+	 * 
+	 * @Title: findPermissionsByUsername 
+	 * @Description: TODO(这里用一句话描述这个方法的作用) 
+	 * @param @param username
+	 * @param @return 
+	 * @return Collection<? extends String>
+	 */
+	public Collection<? extends String> findPermissionsByUsername(String username);
 }

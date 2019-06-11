@@ -17,6 +17,18 @@
     id, code, name, description, enabled, priority, create_man_id, create_time, update_man_id, 
     update_time
   </sql>
+  
+  <select id="findRolesByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >    
+	SELECT 
+		<include refid="Base_Column_List" />
+    FROM sys_role WHERE id IN (
+		SELECT role_id FROM r_role_user r_role_user, sys_user sys_user 
+		WHERE r_role_user.user_id = sys_user.id 
+		AND sys_user.enabled = 1
+		AND sys_user.username = #{username,jdbcType=VARCHAR}
+	)
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
