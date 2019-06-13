@@ -58,7 +58,7 @@ public class SysPowerService implements SysPowerApi {
 
 	@Override
 	public PageModel findPage(SysPowerCondition condition) {
-		List<HashMap<String, Object>> list = sysPowerMapper.selectListMap(condition);
+		List<HashMap<String, Object>> list = sysPowerMapper.selectListMap(condition);		
 		return new PageModel(list);
 	}
 
