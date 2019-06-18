@@ -23,21 +23,21 @@
   <sql id="conditions">
   	<where> 
   		<if test="q != null and q != ''">
-  			and (name like '%${q}%' 
-  				or code like '%${q}%'
+  			and (o.name like '%${q}%' 
+  				or o.code like '%${q}%'
   				)
   		</if>
 	
   		<if test="enabled != null">
-  			and enabled = #{enabled}
+  			and o.enabled = #{enabled}
   		</if>
   		
   		<if test="id != null and id != ''">
-  			and id = #{id}
+  			and o.id = #{id}
   		</if>
   		
   		<if test="code != null and code != ''">
-  			and code = #{code}
+  			and o.code = #{code}
   		</if>
   		
 	</where>
@@ -54,8 +54,17 @@
   <select id="selectListMap" resultType="java.util.Map" 
   	parameterType="com.fsun.domain.condition.SysPowerCondition" >    
 	SELECT 
-		<include refid="Base_Column_List" />
-    FROM sys_power
+		o.id as id, 
+		o.name as name, 
+		o.code as code, 
+		o.menu_id as menuId, 
+		o.enabled as enabled, 
+		o.description as description, 
+		o.url as url, 
+		o.priority as priority, 
+    	m.name as menuName
+    FROM sys_power o 
+    LEFT JOIN sys_menu m ON m.id = o.menu_id
     	<include refid="conditions" />
   </select>
   
