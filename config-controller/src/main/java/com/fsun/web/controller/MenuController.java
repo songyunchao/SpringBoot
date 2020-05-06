@@ -16,7 +16,6 @@ import com.fsun.common.utils.StringUtils;
 import com.fsun.domain.common.HttpResult;
 import com.fsun.domain.common.PageModel;
 import com.fsun.domain.condition.SysMenuCondition;
-import com.fsun.domain.condition.SysPowerCondition;
 import com.fsun.domain.dto.MenuTreeDto;
 import com.fsun.domain.model.SysMenu;
 import com.fsun.domain.model.SysUser;
