@@ -87,6 +87,7 @@ public class SysPowerService implements SysPowerApi {
 			if(sysPower==null){
 				throw new PowerException(SCMErrorEnum.POWER_NOT_EXIST);
 			}	
+			sysPower.setCode(domain.getCode());
 			sysPower.setName(domain.getName());
 			sysPower.setMenuId(domain.getMenuId());
 			sysPower.setUrl(domain.getUrl());
@@ -121,6 +122,21 @@ public class SysPowerService implements SysPowerApi {
 			sysPower.setUpdateTime(now);
 			sysPower.setEnabled(enabled);
 			sysPowerMapper.updateByPrimaryKeySelective(sysPower);
+		}
+	}
+
+	@Transactional
+	@Override
+	public void configModule(String menuId, String ids, SysUser currentUser) {
+		Date now = new Date();		
+		if(ids!=null && !ids.equals("")){
+			for (String powerId : ids.split(",")) {
+				SysPower sysPower = this.load(powerId);
+				sysPower.setUpdateManId(currentUser.getId());
+				sysPower.setUpdateTime(now);
+				sysPower.setMenuId(menuId);
+				sysPowerMapper.updateByPrimaryKeySelective(sysPower);
+			}
 		}
 	}
 

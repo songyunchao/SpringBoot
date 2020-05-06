@@ -24,6 +24,59 @@
     expanded, enabled, description, priority, create_man_id, pid
   </sql>
   
+  <sql id="conditions">
+  	<where> 
+  		<if test="q != null and q != ''">
+  			and (o.name like '%${q}%' 
+  				or o.code like '%${q}%'
+  				)
+  		</if>
+  		<if test="enabled != null">
+  			and o.enabled = #{enabled}
+  		</if>
+  		
+  		<if test="id != null and id != ''">
+  			and o.id = #{id}
+  		</if>
+  		
+  		<if test="code != null and code != ''">
+  			and o.code = #{code}
+  		</if>
+  		
+  		<if test="name!= null and name != ''">
+  			and o.name like '%${name}%'
+  		</if>
+  		
+	</where>
+  </sql>
+  
+  <select id="selectList" resultMap="BaseResultMap" 
+  	parameterType="com.fsun.domain.condition.SysMenuCondition" >    
+	SELECT 
+		<include refid="Base_Column_List" />
+    FROM sys_menu o
+    	<include refid="conditions" />
+  </select>
+  
+  <select id="selectListMap" resultType="java.util.Map" 
+  	parameterType="com.fsun.domain.condition.SysMenuCondition" >    
+	SELECT 
+		o.id as id, 
+		o.name as name, 
+		o.code as code, 
+		o.url as url, 
+		o.icon as icon, 
+		o.isleaf as isleaf, 
+		o.iconcls as iconcls, 
+    	o.expanded as expanded, 
+		o.enabled as enabled, 
+		o.description as description, 
+		o.priority as priority, 
+    	o.pid as pid
+    FROM sys_menu o 
+    	<include refid="conditions" />
+  </select>
+  
   <select id="findMenusByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >    
 	SELECT 
 		<include refid="Base_Column_List" />   

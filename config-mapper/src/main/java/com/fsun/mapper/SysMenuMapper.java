@@ -1,5 +1,7 @@
 package com.fsun.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.fsun.domain.model.SysMenu;
@@ -16,5 +18,12 @@ import com.fsun.mapper.common.BaseMySqlMapper;
 
 @Mapper
 public interface SysMenuMapper extends BaseMySqlMapper<SysMenu>{
+
+	/**
+	 * 根据当前账户获取对应的菜单树
+	 * @param username
+	 * @return
+	 */
+	public List<SysMenu> findMenusByUsername(String username);
 
 }

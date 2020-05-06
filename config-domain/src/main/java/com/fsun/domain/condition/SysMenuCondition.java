@@ -2,7 +2,9 @@ package com.fsun.domain.condition;
 
 import java.util.Date;
 
-public class SysMenuCondition {
+import com.fsun.domain.common.BaseCondition;
+
+public class SysMenuCondition extends BaseCondition{
 	/**
      * ID
      * 表字段 : sys_menu.id

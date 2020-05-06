@@ -3,20 +3,28 @@ package com.fsun.web.shiro;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.Subject;
+import org.pac4j.cas.profile.CasProfile;
+import org.pac4j.cas.profile.CasRestProfile;
 import org.pac4j.core.profile.CommonProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fsun.domain.condition.SysUserCondition;
 import com.fsun.domain.model.SysRole;
+import com.fsun.domain.model.SysUser;
 import com.fsun.service.SysUserApi;
 
 import io.buji.pac4j.realm.Pac4jRealm;
@@ -33,6 +41,8 @@ import io.buji.pac4j.token.Pac4jToken;
  */
 public class CasUserRealm extends Pac4jRealm {
 	
+	public static final String SESSION_USER_KEY = "user";
+	
 	@Autowired
 	private SysUserApi userApi;
 
@@ -40,18 +50,38 @@ public class CasUserRealm extends Pac4jRealm {
 		setAuthenticationTokenClass(Pac4jToken.class);
 	}
 
+	/**
+	 * 登录认证
+	 * @param authenticationToken
+	 * @return
+	 * @throws AuthenticationException
+	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken)
 			throws AuthenticationException {
 
-		final Pac4jToken token = (Pac4jToken) authenticationToken;
+		final Pac4jToken token = (Pac4jToken) authenticationToken;	
+		SysUserCondition condition = new SysUserCondition();		
+		condition.setUsername(this.getUsernameFromToken(token));
+		List<SysUser> userList = userApi.list(condition);
+		if (userList == null || userList.size() != 1) {
+			throw new UnknownAccountException();
+		}
+		//认证操作
 		final LinkedHashMap<String, CommonProfile> profiles = token.getProfiles();
-
 		final Pac4jPrincipal principal = new Pac4jPrincipal(profiles, this.getPrincipalNameAttribute());
 		final PrincipalCollection principalCollection = new SimplePrincipalCollection(principal, getName());
-		return new SimpleAuthenticationInfo(principalCollection, profiles.hashCode());
+		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(principalCollection, profiles.hashCode());
+		//当验证都通过后，把用户信息放在session里
+		this.setSession(SESSION_USER_KEY, userList.get(0));
+		return authenticationInfo;
 	}
 
+	/**
+	 * 权限认证
+	 * @param principals
+	 * @return
+	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(final PrincipalCollection principals) {
 		final Set<String> roleNames = new HashSet<>();
@@ -77,6 +107,41 @@ public class CasUserRealm extends Pac4jRealm {
 		simpleAuthorizationInfo.addRoles(roleNames);
 		simpleAuthorizationInfo.addStringPermissions(permissions);
 		return simpleAuthorizationInfo;
+	}
+	
+	
+	/***********************************         私有方法                 ****************************************/
+	
+	/**
+	 * 将用户放到ShiroSession中
+	 */
+	private void setSession(Object key, Object value) {
+		Subject subject = SecurityUtils.getSubject();
+		if (null != subject) {
+			subject.getSession().setAttribute(key, value);
+			System.out.println("Session默认超时时间为["+ subject.getSession().getTimeout() + "]毫秒");
+		}
+	}
+	
+	/**
+	 * 从token中过去username
+	 * @param token
+	 * @return
+	 */
+	private String getUsernameFromToken(Pac4jToken token) {
+		String username = null;
+		Optional<Object> optional = (Optional<Object>) token.getPrincipal();
+		Object obj = optional.get();			
+		if(obj instanceof CasRestProfile){
+			CasRestProfile casRestProfile = (CasRestProfile)obj;
+			username = casRestProfile.getId();
+		}else if(obj instanceof CasProfile){
+			CasProfile casProfile = (CasProfile)obj;
+			username = casProfile.getId();
+		}else{
+			throw new UnknownAccountException();
+		}
+		return username;
 	}
 
 }

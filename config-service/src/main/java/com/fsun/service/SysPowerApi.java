@@ -35,4 +35,12 @@ public interface SysPowerApi extends BaseApi<SysPower, SysPowerCondition>{
 	 */
 	public void changeStatus(String[] split, Boolean enabled, SysUser currentUser);
 
+	/**
+	 * 批量配置模块
+	 * @param menuId
+	 * @param ids
+	 * @param currentUser
+	 */
+	public void configModule(String menuId, String ids, SysUser currentUser);
+
 }

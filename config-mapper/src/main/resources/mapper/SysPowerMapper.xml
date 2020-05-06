@@ -47,7 +47,7 @@
   	parameterType="com.fsun.domain.condition.SysPowerCondition" >    
 	SELECT 
 		<include refid="Base_Column_List" />
-    FROM sys_power
+    FROM sys_power o
     	<include refid="conditions" />
   </select>
   
@@ -61,7 +61,8 @@
 		o.enabled as enabled, 
 		o.description as description, 
 		o.url as url, 
-		o.priority as priority, 
+		o.priority as priority,
+		o.create_time as createTime,
     	m.name as menuName
     FROM sys_power o 
     LEFT JOIN sys_menu m ON m.id = o.menu_id

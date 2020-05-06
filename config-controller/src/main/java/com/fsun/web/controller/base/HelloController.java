@@ -102,8 +102,13 @@ public class HelloController extends BaseController{
     	    SysUserCondition condition = new SysUserCondition();
     	    condition.setUsername(username);	
 			List<SysUser> list = sysUserApi.list(condition);
-			if(list!=null && list.size()==1){				
-				return success(list.get(0));
+			if(list!=null && list.size()==1){	
+				HashMap<String, Object> result = new HashMap<>();
+				result.put("name", list.get(0).getRealname());
+				result.put("roles", new String[]{"admin"});
+				result.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+				result.put("introduction", "123456789");
+				return success(result);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
