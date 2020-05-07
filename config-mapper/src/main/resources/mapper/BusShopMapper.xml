@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fsun.mapper.BusShopMapper" >
+  <resultMap id="BaseResultMap" type="com.fsun.domain.model.BusShop" >
+    <id column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="shop_code" property="shopCode" jdbcType="VARCHAR" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="enabled" property="enabled" jdbcType="BIT" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="created_id" property="createdId" jdbcType="VARCHAR" />
+    <result column="updated_id" property="updatedId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shop_id, shop_code, shop_name, position, address, tel, contacts, memo, enabled, created_time, 
+    updated_time, created_id, updated_id
+  </sql>
+  
+  <sql id="conditions">
+  	<where> 
+  		<if test="q != null and q != ''">
+  			and (o.shop_name like '%${q}%' 
+  				or o.shop_code like '%${q}%'
+  				)
+  		</if>
+	
+  		<if test="enabled != null">
+  			and o.enabled = #{enabled}
+  		</if>
+  		
+  		<if test="shopId != null and shopId != ''">
+  			and o.shop_id = #{shopId}
+  		</if>
+  		
+  		<if test="shopCode != null and shopCode != ''">
+  			and o.shop_code = #{shopCode}
+  		</if>
+  		
+	</where>
+  </sql>
+  
+  <select id="selectList" resultMap="BaseResultMap" 
+  	parameterType="com.fsun.domain.condition.BusShopCondition" >    
+	SELECT 
+		<include refid="Base_Column_List" />
+    FROM bus_shop o
+    	<include refid="conditions" />
+  </select>
+  
+  <select id="selectListMap" resultType="java.util.Map" 
+  	parameterType="com.fsun.domain.condition.BusShopCondition" >    
+	SELECT 
+		<include refid="Base_Column_List" />
+    FROM bus_shop o
+    	<include refid="conditions" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bus_shop
+    where shop_id = #{shopId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from bus_shop
+    where shop_id = #{shopId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fsun.domain.model.BusShop" >
+    insert into bus_shop (shop_id, shop_code, shop_name, 
+      position, address, tel, 
+      contacts, memo, enabled, 
+      created_time, updated_time, created_id, 
+      updated_id)
+    values (#{shopId,jdbcType=VARCHAR}, #{shopCode,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{position,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{contacts,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{createdId,jdbcType=VARCHAR}, 
+      #{updatedId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fsun.domain.model.BusShop" >
+    insert into bus_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="shopCode != null" >
+        shop_code,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="contacts != null" >
+        contacts,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="updatedTime != null" >
+        updated_time,
+      </if>
+      <if test="createdId != null" >
+        created_id,
+      </if>
+      <if test="updatedId != null" >
+        updated_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCode != null" >
+        #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null" >
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdId != null" >
+        #{createdId,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedId != null" >
+        #{updatedId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fsun.domain.model.BusShop" >
+    update bus_shop
+    <set >
+      <if test="shopCode != null" >
+        shop_code = #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null" >
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdId != null" >
+        created_id = #{createdId,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedId != null" >
+        updated_id = #{updatedId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fsun.domain.model.BusShop" >
+    update bus_shop
+    set shop_code = #{shopCode,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      enabled = #{enabled,jdbcType=BIT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      created_id = #{createdId,jdbcType=VARCHAR},
+      updated_id = #{updatedId,jdbcType=VARCHAR}
+    where shop_id = #{shopId,jdbcType=VARCHAR}
+  </update>
+</mapper>

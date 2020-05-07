@@ -55,4 +55,12 @@ public interface SysUserApi extends BaseApi<SysUser, SysUserCondition>{
 	 * @return Collection<? extends String>
 	 */
 	public Collection<? extends String> findPermissionsByUsername(String username);
+
+	/**
+	 * 批量关联门店
+	 * @param shopId
+	 * @param ids
+	 * @param currentUser
+	 */
+	public void configShop(String shopId, String ids, SysUser currentUser);
 }

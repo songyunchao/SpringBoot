@@ -27,26 +27,30 @@
   <sql id="conditions">
   	<where> 
   		<if test="q != null and q != ''">
-  			and (username like '%${q}%' 
-  				or realname like '%${q}%'
-  				or telphone like '%${q}%'
+  			and (o.username like '%${q}%' 
+  				or o.realname like '%${q}%'
+  				or o.telphone like '%${q}%'
   				)
   		</if>
   		
   		<if test="issys != null">
-  			and issys = #{issys}
+  			and o.issys = #{issys}
   		</if>
   		
   		<if test="enabled != null">
-  			and enabled = #{enabled}
+  			and o.enabled = #{enabled}
+  		</if>
+  		
+  		<if test="shopId != null and shopId != ''">
+  			and o.shop_id = #{shopId}
   		</if>
   		
   		<if test="id != null and id != ''">
-  			and id = #{id}
+  			and o.id = #{id}
   		</if>
   		
   		<if test="username != null and username != ''">
-  			and username = #{username}
+  			and o.username = #{username}
   		</if>
   		
 	</where>
@@ -56,15 +60,32 @@
   	parameterType="com.fsun.domain.condition.SysUserCondition" >    
 	SELECT 
 		<include refid="Base_Column_List" />
-    FROM sys_user
+    FROM sys_user o
     	<include refid="conditions" />
   </select>
   
   <select id="selectListMap" resultType="java.util.Map" 
   	parameterType="com.fsun.domain.condition.SysUserCondition" >    
 	SELECT 
-		<include refid="Base_Column_List" />
-    FROM sys_user
+		o.id as id, 
+		o.code as code, 
+		o.username as username, 
+		o.password as password, 
+		o.realname as realname, 
+		o.email as email, 
+		o.telphone as telphone, 
+		o.description as description, 
+		o.issys as issys, 
+		o.enabled as enabled,  
+    	o.priority as priority, 
+    	o.create_man_id as create_man_id,  
+    	o.create_time as create_time, 
+    	o.update_man_id as update_man_id,  
+    	o.update_time as update_time, 
+    	o.shop_id as shop_id, 
+    	s.shop_name as shop_name
+    FROM sys_user o
+    Left Join bus_shop s on o.shop_id = s.shop_id
     	<include refid="conditions" />
   </select>
   

@@ -60,12 +60,20 @@ public class CasUserRealm extends Pac4jRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken authenticationToken)
 			throws AuthenticationException {
 
+		List<SysUser> userList = null;
 		final Pac4jToken token = (Pac4jToken) authenticationToken;	
-		SysUserCondition condition = new SysUserCondition();		
-		condition.setUsername(this.getUsernameFromToken(token));
-		List<SysUser> userList = userApi.list(condition);
-		if (userList == null || userList.size() != 1) {
-			throw new UnknownAccountException();
+		String username = this.getUsernameFromToken(token);		
+		Subject subject = SecurityUtils.getSubject();		
+		if (null != subject) {
+			Object user = SecurityUtils.getSubject().getSession().getAttribute(SESSION_USER_KEY);
+			if(user == null){
+				SysUserCondition condition = new SysUserCondition();		
+				condition.setUsername(username);
+				userList = userApi.list(condition);
+				if (userList == null || userList.size() != 1) {
+					throw new UnknownAccountException();
+				}
+			}
 		}
 		//认证操作
 		final LinkedHashMap<String, CommonProfile> profiles = token.getProfiles();
@@ -73,7 +81,9 @@ public class CasUserRealm extends Pac4jRealm {
 		final PrincipalCollection principalCollection = new SimplePrincipalCollection(principal, getName());
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(principalCollection, profiles.hashCode());
 		//当验证都通过后，把用户信息放在session里
-		this.setSession(SESSION_USER_KEY, userList.get(0));
+		if(userList != null){
+			this.setSession(SESSION_USER_KEY, userList.get(0));
+		}		
 		return authenticationInfo;
 	}
 

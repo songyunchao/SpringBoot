@@ -102,6 +102,7 @@ public class SysUserService implements SysUserApi {
 			sysUser.setRealname(domain.getRealname());
 			sysUser.setPriority(domain.getPriority());
 			sysUser.setEmail(domain.getEmail());
+			sysUser.setTelphone(domain.getTelphone());
 			sysUser.setDescription(domain.getDescription());
 			sysUser.setUpdateManId(currentUser.getId());
 			sysUser.setUpdateTime(now);
@@ -144,5 +145,20 @@ public class SysUserService implements SysUserApi {
 	@Override
 	public Collection<? extends String> findPermissionsByUsername(String username) {		
 		return sysPowerMapper.findPermissionsByUsername(username);
+	}
+
+	@Transactional
+	@Override
+	public void configShop(String shopId, String ids, SysUser currentUser) {
+		Date now = new Date();		
+		if(ids!=null && !ids.equals("")){
+			for (String userId : ids.split(",")) {
+				SysUser sysUser = this.load(userId);
+				sysUser.setUpdateManId(currentUser.getId());
+				sysUser.setUpdateTime(now);
+				sysUser.setShopId(shopId);
+				sysUserMapper.updateByPrimaryKeySelective(sysUser);
+			}
+		}
 	}
 }

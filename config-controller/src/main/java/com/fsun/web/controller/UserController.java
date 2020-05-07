@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fsun.common.utils.StringUtils;
+import com.fsun.domain.common.BaseCondition;
 import com.fsun.domain.common.HttpResult;
 import com.fsun.domain.common.PageModel;
 import com.fsun.domain.condition.SysUserCondition;
@@ -79,7 +80,7 @@ public class UserController extends BaseController {
      */
 	@RequestMapping(value="/findPage", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public HttpResult findPage(SysUserCondition condition) {
+	public HttpResult findPage(@RequestBody SysUserCondition condition) {
 		try {
 			PageModel pageModel = sysUserApi.findPage(condition);
 			return success(pageModel);
@@ -168,10 +169,31 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value="/delete", method = {RequestMethod.POST})
 	@ResponseBody
-	public HttpResult delete(@RequestParam("userIds") String userIds) {
+	public HttpResult delete(@RequestBody BaseCondition params) {
 		try {
-			if (!StringUtils.isEmpty(userIds)) {
-				sysUserApi.delete(userIds);
+			if (!StringUtils.isEmpty(params.getIds())) {
+				sysUserApi.delete(params.getIds());
+				return success(SCMErrorEnum.SUCCESS);
+			}
+			return failure(SCMErrorEnum.INVALID_PARAMS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return failure(SCMErrorEnum.SYSTEM_ERROR);
+		}
+	}
+	
+	/**
+	 * 批量配置门店操作
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value="/configShop/{shopId}", method = {RequestMethod.POST})
+	@ResponseBody
+	public HttpResult configShop(@PathVariable("shopId") String shopId,
+			@RequestBody BaseCondition params) {
+		try {
+			if (!StringUtils.isEmpty(params.getIds())) {
+				sysUserApi.configShop(shopId, params.getIds(), getCurrentUser());
 				return success(SCMErrorEnum.SUCCESS);
 			}
 			return failure(SCMErrorEnum.INVALID_PARAMS);

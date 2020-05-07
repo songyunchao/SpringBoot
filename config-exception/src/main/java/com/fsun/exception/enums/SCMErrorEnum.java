@@ -27,7 +27,10 @@ public enum SCMErrorEnum {
 	POWER_NOT_EXIST(20001, "权限不存在"),
 	POWER_ID_NOT_NULL(20002, "权限id不能为空"),	
 	POWER_ILLEGAL(20003, "权限非法"),
-	POWER_EXISTED(20004, "权限已存在");
+	POWER_EXISTED(20004, "权限已存在"),
+	
+	SHOP_NOT_EXIST(20001, "权限不存在"),
+	SHOP_EXISTED(20004, "权限已存在");
 	
 	
 	private int errorCode;
