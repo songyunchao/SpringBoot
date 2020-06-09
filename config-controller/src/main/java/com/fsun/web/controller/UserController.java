@@ -112,6 +112,27 @@ public class UserController extends BaseController {
 	}
 	
 	/**
+     * 导出操作
+     * @Title: findPage 
+     * @Description: TODO(这里用一句话描述这个方法的作用) 
+     * @param @param condition
+     * @param @return 
+     * @return HttpResult
+     */
+	@RequestMapping(value="/export", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public HttpResult export(@RequestBody SysUserCondition condition) {
+		try {
+			String taskNo = sysUserApi.export(condition);
+			return success(taskNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return failure(SCMErrorEnum.SYSTEM_ERROR);
+		}
+	}
+	
+	
+	/**
 	 * 新增或更新操作
 	 * @Title: save 
 	 * @Description: TODO(这里用一句话描述这个方法的作用) 

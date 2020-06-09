@@ -33,6 +33,8 @@
         <shiro.version>1.3.2</shiro.version>
         <swagger.version>2.2.2</swagger.version>
         <jwt.version>3.4.0</jwt.version>
+        <apache-httpclient.version>4.5.2</apache-httpclient.version>
+        <alibaba.fastjson.version>1.2.60</alibaba.fastjson.version>
         <fsun-config.version>${project.version}</fsun-config.version>
     </properties>
 
@@ -121,6 +123,13 @@
 	            <artifactId>mysql-connector-java</artifactId>
 	            <version>${mysql.version}</version>
 	        </dependency>
+	        
+	        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+			<dependency>
+			    <groupId>com.alibaba</groupId>
+			    <artifactId>fastjson</artifactId>
+			    <version>${alibaba.fastjson.version}</version>
+			</dependency>
 	
 	        <!-- 数据库连接池 -->
 	        <dependency>
@@ -152,6 +161,24 @@
 				<artifactId>commons-lang3</artifactId>
 				<version>${commons-lang3.version}</version>
 			</dependency>
+			
+			<!-- Apache Http Begin -->
+	        <dependency>
+	            <groupId>org.apache.httpcomponents</groupId>
+	            <artifactId>httpclient</artifactId>
+	            <version>${apache-httpclient.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.httpcomponents</groupId>
+	            <artifactId>fluent-hc</artifactId>
+	            <version>${apache-httpclient.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.httpcomponents</groupId>
+	            <artifactId>httpmime</artifactId>
+	            <version>${apache-httpclient.version}</version>
+	        </dependency>
+	        <!-- Apache Http End -->
 			
 			<!--Apache Shiro所需的jar包-->    
 		  	<dependency>

@@ -30,7 +30,27 @@
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
-		</dependency>	
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		</dependency>
+		
+		<!-- Apache Http Begin -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>            
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>fluent-hc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+        </dependency>
+        <!-- Apache Http End -->
 		
 	</dependencies>
 </project>

@@ -161,4 +161,10 @@ public class SysUserService implements SysUserApi {
 			}
 		}
 	}
+
+	@Override
+	public String export(SysUserCondition condition) {
+		// TODO Auto-generated method stub
+		return "Export2020060600001";
+	}
 }

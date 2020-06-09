@@ -15,7 +15,7 @@ import com.fsun.domain.model.SysUser;
  * @date 2019年5月16日 下午3:31:51 
  *
  */
-public interface SysUserApi extends BaseApi<SysUser, SysUserCondition>{
+public interface SysUserApi extends BaseBusApi<SysUser, SysUserCondition>{
  
 	/**
 	 * @Title: unique 
@@ -63,4 +63,5 @@ public interface SysUserApi extends BaseApi<SysUser, SysUserCondition>{
 	 * @param currentUser
 	 */
 	public void configShop(String shopId, String ids, SysUser currentUser);
+
 }

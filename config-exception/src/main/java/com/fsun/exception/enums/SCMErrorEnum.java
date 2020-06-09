@@ -29,9 +29,11 @@ public enum SCMErrorEnum {
 	POWER_ILLEGAL(20003, "权限非法"),
 	POWER_EXISTED(20004, "权限已存在"),
 	
-	SHOP_NOT_EXIST(20001, "权限不存在"),
-	SHOP_EXISTED(20004, "权限已存在");
+	SHOP_NOT_EXIST(30001, "门店不存在"),
+	SHOP_EXISTED(30004, "门店已存在"),
 	
+	MESSAGE_NOT_EXIST(40001, "任务不存在"),
+	MESSAGE_STATUS_ILLEGAL(40003, "任务状态非法");
 	
 	private int errorCode;
 	

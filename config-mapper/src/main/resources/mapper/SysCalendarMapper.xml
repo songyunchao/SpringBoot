@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fsun.mapper.SysCalendarMapper" >
+  <resultMap id="BaseResultMap" type="com.fsun.domain.model.SysCalendar" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="type" property="type" jdbcType="SMALLINT" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="special_day_code" property="specialDayCode" jdbcType="SMALLINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="day" property="day" jdbcType="VARCHAR" />
+    <result column="unix_time" property="unixTime" jdbcType="INTEGER" />
+    <result column="year_name" property="yearName" jdbcType="VARCHAR" />
+    <result column="lunar_calendar_cn" property="lunarCalendarCn" jdbcType="VARCHAR" />
+    <result column="lunar_calendar_en" property="lunarCalendarEn" jdbcType="VARCHAR" />
+    <result column="zodiac_cn" property="zodiacCn" jdbcType="VARCHAR" />
+    <result column="solar_term" property="solarTerm" jdbcType="VARCHAR" />
+    <result column="week_cn" property="weekCn" jdbcType="VARCHAR" />
+    <result column="week_figures" property="weekFigures" jdbcType="VARCHAR" />
+    <result column="week_short_en" property="weekShortEn" jdbcType="VARCHAR" />
+    <result column="week_full_en" property="weekFullEn" jdbcType="VARCHAR" />
+    <result column="day_sort" property="daySort" jdbcType="INTEGER" />
+    <result column="week_sort" property="weekSort" jdbcType="INTEGER" />
+    <result column="avoid" property="avoid" jdbcType="VARCHAR" />
+    <result column="suit" property="suit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, status, type, type_name, special_day_code, content, day, unix_time, year_name, 
+    lunar_calendar_cn, lunar_calendar_en, zodiac_cn, solar_term, week_cn, week_figures, 
+    week_short_en, week_full_en, day_sort, week_sort, avoid, suit
+  </sql>
+  
+  <sql id="conditions">
+  	<where> 
+       and o.status = 1	
+       <if test="q != null and q != ''">
+  			and o.day like '${q}%'
+  		</if>
+	</where>
+  </sql>
+  
+  <select id="selectList" resultMap="BaseResultMap" 
+  	parameterType="com.fsun.domain.condition.SysCalendarCondition" >    
+	SELECT 
+		<include refid="Base_Column_List" />
+    FROM sys_calendar o
+    	<include refid="conditions" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_calendar
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_calendar
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fsun.domain.model.SysCalendar" >
+    insert into sys_calendar (id, status, type, 
+      type_name, special_day_code, content, 
+      day, unix_time, year_name, 
+      lunar_calendar_cn, lunar_calendar_en, zodiac_cn, 
+      solar_term, week_cn, week_figures, 
+      week_short_en, week_full_en, day_sort, 
+      week_sort, avoid, suit
+      )
+    values (#{id,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{type,jdbcType=SMALLINT}, 
+      #{typeName,jdbcType=VARCHAR}, #{specialDayCode,jdbcType=SMALLINT}, #{content,jdbcType=VARCHAR}, 
+      #{day,jdbcType=VARCHAR}, #{unixTime,jdbcType=INTEGER}, #{yearName,jdbcType=VARCHAR}, 
+      #{lunarCalendarCn,jdbcType=VARCHAR}, #{lunarCalendarEn,jdbcType=VARCHAR}, #{zodiacCn,jdbcType=VARCHAR}, 
+      #{solarTerm,jdbcType=VARCHAR}, #{weekCn,jdbcType=VARCHAR}, #{weekFigures,jdbcType=VARCHAR}, 
+      #{weekShortEn,jdbcType=VARCHAR}, #{weekFullEn,jdbcType=VARCHAR}, #{daySort,jdbcType=INTEGER}, 
+      #{weekSort,jdbcType=INTEGER}, #{avoid,jdbcType=VARCHAR}, #{suit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fsun.domain.model.SysCalendar" >
+    insert into sys_calendar
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="typeName != null" >
+        type_name,
+      </if>
+      <if test="specialDayCode != null" >
+        special_day_code,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="day != null" >
+        day,
+      </if>
+      <if test="unixTime != null" >
+        unix_time,
+      </if>
+      <if test="yearName != null" >
+        year_name,
+      </if>
+      <if test="lunarCalendarCn != null" >
+        lunar_calendar_cn,
+      </if>
+      <if test="lunarCalendarEn != null" >
+        lunar_calendar_en,
+      </if>
+      <if test="zodiacCn != null" >
+        zodiac_cn,
+      </if>
+      <if test="solarTerm != null" >
+        solar_term,
+      </if>
+      <if test="weekCn != null" >
+        week_cn,
+      </if>
+      <if test="weekFigures != null" >
+        week_figures,
+      </if>
+      <if test="weekShortEn != null" >
+        week_short_en,
+      </if>
+      <if test="weekFullEn != null" >
+        week_full_en,
+      </if>
+      <if test="daySort != null" >
+        day_sort,
+      </if>
+      <if test="weekSort != null" >
+        week_sort,
+      </if>
+      <if test="avoid != null" >
+        avoid,
+      </if>
+      <if test="suit != null" >
+        suit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialDayCode != null" >
+        #{specialDayCode,jdbcType=SMALLINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="unixTime != null" >
+        #{unixTime,jdbcType=INTEGER},
+      </if>
+      <if test="yearName != null" >
+        #{yearName,jdbcType=VARCHAR},
+      </if>
+      <if test="lunarCalendarCn != null" >
+        #{lunarCalendarCn,jdbcType=VARCHAR},
+      </if>
+      <if test="lunarCalendarEn != null" >
+        #{lunarCalendarEn,jdbcType=VARCHAR},
+      </if>
+      <if test="zodiacCn != null" >
+        #{zodiacCn,jdbcType=VARCHAR},
+      </if>
+      <if test="solarTerm != null" >
+        #{solarTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="weekCn != null" >
+        #{weekCn,jdbcType=VARCHAR},
+      </if>
+      <if test="weekFigures != null" >
+        #{weekFigures,jdbcType=VARCHAR},
+      </if>
+      <if test="weekShortEn != null" >
+        #{weekShortEn,jdbcType=VARCHAR},
+      </if>
+      <if test="weekFullEn != null" >
+        #{weekFullEn,jdbcType=VARCHAR},
+      </if>
+      <if test="daySort != null" >
+        #{daySort,jdbcType=INTEGER},
+      </if>
+      <if test="weekSort != null" >
+        #{weekSort,jdbcType=INTEGER},
+      </if>
+      <if test="avoid != null" >
+        #{avoid,jdbcType=VARCHAR},
+      </if>
+      <if test="suit != null" >
+        #{suit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fsun.domain.model.SysCalendar" >
+    update sys_calendar
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=SMALLINT},
+      </if>
+      <if test="typeName != null" >
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialDayCode != null" >
+        special_day_code = #{specialDayCode,jdbcType=SMALLINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="day != null" >
+        day = #{day,jdbcType=VARCHAR},
+      </if>
+      <if test="unixTime != null" >
+        unix_time = #{unixTime,jdbcType=INTEGER},
+      </if>
+      <if test="yearName != null" >
+        year_name = #{yearName,jdbcType=VARCHAR},
+      </if>
+      <if test="lunarCalendarCn != null" >
+        lunar_calendar_cn = #{lunarCalendarCn,jdbcType=VARCHAR},
+      </if>
+      <if test="lunarCalendarEn != null" >
+        lunar_calendar_en = #{lunarCalendarEn,jdbcType=VARCHAR},
+      </if>
+      <if test="zodiacCn != null" >
+        zodiac_cn = #{zodiacCn,jdbcType=VARCHAR},
+      </if>
+      <if test="solarTerm != null" >
+        solar_term = #{solarTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="weekCn != null" >
+        week_cn = #{weekCn,jdbcType=VARCHAR},
+      </if>
+      <if test="weekFigures != null" >
+        week_figures = #{weekFigures,jdbcType=VARCHAR},
+      </if>
+      <if test="weekShortEn != null" >
+        week_short_en = #{weekShortEn,jdbcType=VARCHAR},
+      </if>
+      <if test="weekFullEn != null" >
+        week_full_en = #{weekFullEn,jdbcType=VARCHAR},
+      </if>
+      <if test="daySort != null" >
+        day_sort = #{daySort,jdbcType=INTEGER},
+      </if>
+      <if test="weekSort != null" >
+        week_sort = #{weekSort,jdbcType=INTEGER},
+      </if>
+      <if test="avoid != null" >
+        avoid = #{avoid,jdbcType=VARCHAR},
+      </if>
+      <if test="suit != null" >
+        suit = #{suit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fsun.domain.model.SysCalendar" >
+    update sys_calendar
+    set status = #{status,jdbcType=SMALLINT},
+      type = #{type,jdbcType=SMALLINT},
+      type_name = #{typeName,jdbcType=VARCHAR},
+      special_day_code = #{specialDayCode,jdbcType=SMALLINT},
+      content = #{content,jdbcType=VARCHAR},
+      day = #{day,jdbcType=VARCHAR},
+      unix_time = #{unixTime,jdbcType=INTEGER},
+      year_name = #{yearName,jdbcType=VARCHAR},
+      lunar_calendar_cn = #{lunarCalendarCn,jdbcType=VARCHAR},
+      lunar_calendar_en = #{lunarCalendarEn,jdbcType=VARCHAR},
+      zodiac_cn = #{zodiacCn,jdbcType=VARCHAR},
+      solar_term = #{solarTerm,jdbcType=VARCHAR},
+      week_cn = #{weekCn,jdbcType=VARCHAR},
+      week_figures = #{weekFigures,jdbcType=VARCHAR},
+      week_short_en = #{weekShortEn,jdbcType=VARCHAR},
+      week_full_en = #{weekFullEn,jdbcType=VARCHAR},
+      day_sort = #{daySort,jdbcType=INTEGER},
+      week_sort = #{weekSort,jdbcType=INTEGER},
+      avoid = #{avoid,jdbcType=VARCHAR},
+      suit = #{suit,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
